@@ -1,6 +1,6 @@
 <html>
 <body>
-<h2>Welcome to ABC technologies this is a demo industry grade project</h2>
+<h2>Welcome to ABC technologies this is a demo industry grade project deployed on Kubernettes</h2>
 <h3>This is retail portal</h3>
 <button name="Add Product" value="Add Product" type="button" onclick="addProduct()">Add Product</button>  
 <script>  
