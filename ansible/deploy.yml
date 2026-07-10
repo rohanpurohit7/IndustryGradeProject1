@@ -1,0 +1,35 @@
+---
+- name: Prepare Jenkins build agent
+  hosts: jenkins_agents
+  become: true
+  tasks:
+    - name: Install required packages
+      ansible.builtin.package:
+        name:
+          - java-21-openjdk
+          - maven
+          - docker
+          - python3
+          - unzip
+          - curl
+        state: present
+
+    - name: Ensure Docker is enabled
+      ansible.builtin.service:
+        name: docker
+        state: started
+        enabled: true
+
+- name: Validate Kubernetes deployment host
+  hosts: kubernetes_admin
+  gather_facts: false
+  vars:
+    image_uri: "{{ image_uri | mandatory }}"
+  tasks:
+    - name: Verify kubectl access
+      ansible.builtin.command: kubectl cluster-info
+      changed_when: false
+
+    - name: Display approved image
+      ansible.builtin.debug:
+        msg: "Deploying scanned image {{ image_uri }}"
